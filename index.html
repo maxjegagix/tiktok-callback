@@ -67,15 +67,88 @@
             color: #fe2c55;
             font-weight: bold;
         }
+        .account-info {
+            background-color: #1b1b1b;
+            border: 1px solid #2c2c2c;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .account-info h2 {
+            font-size: 16px;
+            margin: 0 0 6px 0;
+            color: #25f4ee;
+        }
+        .account-info p {
+            margin: 0;
+            font-size: 13px;
+            color: #b8b8b8;
+        }
+        .account-badge {
+            display: inline-block;
+            background-color: #fe2c55;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: bold;
+            margin-top: 8px;
+        }
+        .terms-link {
+            display: inline-block;
+            margin-top: 16px;
+            color: #25f4ee;
+            text-decoration: none;
+            font-size: 14px;
+        }
+        .terms-link:hover {
+            text-decoration: underline;
+        }
+        .footer-links {
+            margin-top: 16px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+        @media (max-width: 480px) {
+            body {
+                padding: 16px;
+                height: auto;
+                align-items: flex-start;
+            }
+            .container {
+                padding: 24px 18px;
+                border-radius: 10px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+            .btn {
+                padding: 12px 16px;
+            }
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>TikTok Auth Callback</h1>
+        
+        <div class="account-info">
+            <h2>Target Akun TikTok:</h2>
+            <p><strong>@regenerationintime</strong></p>
+            <p style="margin-top: 4px;">Kategori: Entertainment & Hiburan</p>
+            <span class="account-badge">Aktif</span>
+        </div>
+
         <p id="status-text">Extracting authorization code...</p>
         <div id="code-container" style="display: none;">
             <div class="code-box" id="auth-code"></div>
             <button class="btn" onclick="copyCode()">Copy Code</button>
+        </div>
+        <div class="footer-links">
+            <a class="terms-link" href="terms.html">Terms of Rules</a>
+            <a class="terms-link" href="privacy.html">Privacy Policy</a>
         </div>
     </div>
 
