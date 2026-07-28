@@ -1,154 +1,339 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Auth Callback</title>
+    <title>TikTok Entertainment Platform</title>
     <style>
+        :root {
+            --bg: #010101;
+            --panel: #121212;
+            --panel-2: #1e1e1e;
+            --text: #ffffff;
+            --muted: #a9a9a9;
+            --accent: #fe2c55;
+            --accent-2: #25f4ee;
+            --border: #2f2f2f;
+        }
+
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #010101;
-            color: #ffffff;
+            background-color: var(--bg);
+            color: var(--text);
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
+            min-height: 100vh;
             margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
         }
+
         .container {
-            background-color: #121212;
-            border: 1px solid #2f2f2f;
-            border-radius: 12px;
-            padding: 32px;
+            background-color: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 40px 32px;
             max-width: 480px;
             width: 100%;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
             text-align: center;
+            box-sizing: border-box;
         }
+
         h1 {
-            font-size: 24px;
+            font-size: 28px;
+            margin-top: 0;
             margin-bottom: 8px;
-            color: #fe2c55;
+            color: var(--text);
+            font-weight: 800;
         }
-        p {
-            color: #a9a9a9;
+
+        .subtitle {
+            color: var(--muted);
             font-size: 14px;
             line-height: 1.5;
-            margin-bottom: 24px;
+            margin-bottom: 30px;
         }
-        .code-box {
-            background-color: #1e1e1e;
-            border: 1px solid #3e3e3e;
-            border-radius: 6px;
-            padding: 12px;
-            font-family: monospace;
+
+        .account-card {
+            background-color: var(--panel-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            text-align: left;
+        }
+
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            border: 2px solid var(--accent);
+            object-fit: cover;
+            background-color: #333;
+        }
+
+        .account-details {
+            flex: 1;
+        }
+
+        .account-name {
             font-size: 16px;
-            color: #25f4ee;
+            font-weight: 700;
+            margin: 0 0 4px 0;
+            color: var(--text);
+        }
+
+        .account-handle {
+            font-size: 14px;
+            color: var(--accent-2);
+            margin: 0 0 6px 0;
+            font-weight: 600;
+        }
+
+        .account-badge {
+            display: inline-block;
+            background-color: rgba(37, 244, 238, 0.15);
+            color: var(--accent-2);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .tiktok-btn {
+            background-color: var(--text);
+            color: var(--bg);
+            text-decoration: none;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .tiktok-btn:hover {
+            background-color: #e5e5e5;
+            transform: translateY(-1px);
+        }
+
+        .tiktok-btn svg {
+            fill: var(--bg);
+            width: 20px;
+            height: 20px;
+        }
+
+        .share-btn {
+            background-color: var(--accent);
+            color: white;
+            text-decoration: none;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            width: 100%;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+
+        .share-btn:hover {
+            background-color: #e0244d;
+            transform: translateY(-1px);
+        }
+
+        .code-box {
+            background-color: var(--panel-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 14px;
+            font-family: monospace;
+            font-size: 15px;
+            color: var(--accent-2);
             word-break: break-all;
             margin-bottom: 20px;
             user-select: all;
+            text-align: center;
         }
-        .btn {
-            background-color: #fe2c55;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            width: 100%;
+
+        .footer-links {
+            margin-top: 24px;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
         }
-        .btn:hover {
-            background-color: #e0244d;
+
+        .footer-link {
+            color: var(--muted);
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.2s;
         }
-        .error {
-            color: #fe2c55;
-            font-weight: bold;
+
+        .footer-link:hover {
+            color: var(--accent-2);
+            text-decoration: underline;
         }
-        .account-info {
-            background-color: #1b1b1b;
-            border: 1px solid #2c2c2c;
-            border-radius: 8px;
+
+        .error-text {
+            color: var(--accent);
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .config-panel {
+            background-color: var(--panel-2);
+            border: 1px solid var(--border);
+            border-radius: 12px;
             padding: 16px;
             margin-bottom: 20px;
             text-align: left;
         }
-        .account-info h2 {
-            font-size: 16px;
-            margin: 0 0 6px 0;
-            color: #25f4ee;
+
+        .config-panel h3 {
+            font-size: 14px;
+            margin: 0 0 12px 0;
+            color: var(--accent-2);
         }
-        .account-info p {
-            margin: 0;
-            font-size: 13px;
-            color: #b8b8b8;
+
+        .config-group {
+            margin-bottom: 12px;
         }
-        .account-badge {
-            display: inline-block;
-            background-color: #fe2c55;
+
+        .config-group label {
+            display: block;
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 4px;
+        }
+
+        .config-group input {
+            width: 100%;
+            background-color: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 8px 12px;
             color: white;
-            padding: 2px 8px;
-            border-radius: 999px;
+            font-size: 13px;
+            box-sizing: border-box;
+        }
+
+        .config-group input:focus {
+            border-color: var(--accent-2);
+            outline: none;
+        }
+
+        .config-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: 16px;
+        }
+
+        .config-btn {
+            flex: 1;
+            background-color: #333;
+            color: white;
+            border: none;
+            padding: 8px;
             font-size: 12px;
             font-weight: bold;
-            margin-top: 8px;
+            border-radius: 6px;
+            cursor: pointer;
         }
-        .terms-link {
-            display: inline-block;
-            margin-top: 16px;
-            color: #25f4ee;
-            text-decoration: none;
-            font-size: 14px;
+
+        .config-btn.primary {
+            background-color: var(--accent-2);
+            color: var(--bg);
         }
-        .terms-link:hover {
-            text-decoration: underline;
-        }
-        .footer-links {
-            margin-top: 16px;
-            display: flex;
-            justify-content: center;
-            gap: 16px;
-        }
+
         @media (max-width: 480px) {
             body {
                 padding: 16px;
-                height: auto;
-                align-items: flex-start;
             }
             .container {
-                padding: 24px 18px;
-                border-radius: 10px;
+                padding: 32px 20px;
             }
             h1 {
-                font-size: 20px;
-            }
-            .btn {
-                padding: 12px 16px;
+                font-size: 24px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>TikTok Auth Callback</h1>
-        
-        <div class="account-info">
-            <h2>Target Akun TikTok:</h2>
-            <p><strong>@regenerationintime</strong></p>
-            <p style="margin-top: 4px;">Kategori: Entertainment & Hiburan</p>
-            <span class="account-badge">Aktif</span>
+        <!-- Header -->
+        <h1 id="page-title">TikTok Entertainment</h1>
+        <p class="subtitle" id="page-subtitle">Hubungkan akun Anda untuk mulai membagikan konten hiburan menarik.</p>
+
+        <!-- Account Info Card -->
+        <div class="account-card">
+            <img class="avatar" src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?w=150&auto=format&fit=crop&q=60" alt="TikTok Avatar">
+            <div class="account-details">
+                <div class="account-name">Regeneration In Time</div>
+                <div class="account-handle">@regenerationintime</div>
+                <span class="account-badge">Entertainment Content</span>
+            </div>
         </div>
 
-        <p id="status-text">Extracting authorization code...</p>
-        <div id="code-container" style="display: none;">
-            <div class="code-box" id="auth-code"></div>
-            <button class="btn" onclick="copyCode()">Copy Code</button>
+        <!-- Dynamic Views -->
+        <div id="login-view">
+            <!-- Configuration Panel -->
+            <div class="config-panel">
+                <h3>Konfigurasi API TikTok</h3>
+                <div class="config-group">
+                    <label for="client-key">Client Key / Client ID</label>
+                    <input type="text" id="client-key" placeholder="Masukkan Client Key TikTok">
+                </div>
+                <div class="config-group">
+                    <label for="redirect-uri">Redirect URI</label>
+                    <input type="text" id="redirect-uri" placeholder="https://domain-anda.vercel.app/">
+                </div>
+                <div class="config-actions">
+                    <button class="config-btn" onclick="useMockLogin()">Simulasi Login</button>
+                    <button class="config-btn primary" onclick="saveConfig()">Simpan & Hubungkan</button>
+                </div>
+            </div>
+
+            <a href="#" class="tiktok-btn" id="auth-link" onclick="handleTikTokLogin(event)">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.02 1.62 4.2 1.12 1.27 2.7 2.07 4.34 2.27v3.45c-1.6-.06-3.17-.58-4.51-1.48-.33-.23-.64-.49-.93-.77v7.02c.01 3.71-2.4 7.14-5.97 8.16-3.83 1.15-8.02-.85-9.49-4.63-1.66-4.07.46-8.86 4.55-10.2 1.21-.41 2.5-.5 3.76-.3v3.42c-.94-.24-1.95-.17-2.84.25-1.86.82-2.93 2.9-2.48 4.9.47 2.18 2.64 3.56 4.81 3.11 1.78-.36 3.02-1.91 3.02-3.73V0h.17z"/>
+                </svg>
+                Log in with TikTok
+            </a>
         </div>
+
+        <div id="profile-view" style="display: none;">
+            <div class="code-box" id="auth-code"></div>
+            <button class="share-btn" onclick="shareContent()">
+                Share to TikTok
+            </button>
+        </div>
+
+        <!-- Footer Links -->
         <div class="footer-links">
-            <a class="terms-link" href="terms.html">Terms of Rules</a>
-            <a class="terms-link" href="privacy.html">Privacy Policy</a>
+            <a class="footer-link" href="terms.html">Terms of Rules</a>
+            <a class="footer-link" href="privacy.html">Privacy Policy</a>
         </div>
     </div>
 
@@ -158,23 +343,78 @@
         const error = params.get('error');
         const errorDescription = params.get('error_description');
 
-        const statusText = document.getElementById('status-text');
-        const codeContainer = document.getElementById('code-container');
+        const loginView = document.getElementById('login-view');
+        const profileView = document.getElementById('profile-view');
+        const pageTitle = document.getElementById('page-title');
+        const pageSubtitle = document.getElementById('page-subtitle');
         const authCodeDiv = document.getElementById('auth-code');
 
+        // Load saved config
+        window.onload = function() {
+            const savedKey = localStorage.getItem('tiktok_client_key');
+            const savedUri = localStorage.getItem('tiktok_redirect_uri') || window.location.origin + window.location.pathname;
+            
+            if (savedKey) document.getElementById('client-key').value = savedKey;
+            document.getElementById('redirect-uri').value = savedUri;
+        };
+
+        function saveConfig() {
+            const key = document.getElementById('client-key').value.trim();
+            const uri = document.getElementById('redirect-uri').value.trim();
+            
+            if (!key) {
+                alert("Harap masukkan Client Key!");
+                return;
+            }
+            
+            localStorage.setItem('tiktok_client_key', key);
+            localStorage.setItem('tiktok_redirect_uri', uri);
+            alert("Konfigurasi disimpan!");
+        }
+
+        function handleTikTokLogin(event) {
+            event.preventDefault();
+            const key = localStorage.getItem('tiktok_client_key') || document.getElementById('client-key').value.trim();
+            const uri = localStorage.getItem('tiktok_redirect_uri') || document.getElementById('redirect-uri').value.trim();
+
+            if (!key) {
+                alert("Harap isi dan simpan Client Key terlebih dahulu!");
+                return;
+            }
+
+            // Generate TikTok OAuth URL
+            const state = Math.random().toString(36).substring(2, 15);
+            const authUrl = `https://www.tiktok.com/v2/auth/authorize/?client_key=${key}&scope=user.info.basic,video.upload,video.publish&response_type=code&redirect_uri=${encodeURIComponent(uri)}&state=${state}`;
+            
+            window.location.href = authUrl;
+        }
+
+        function useMockLogin() {
+            // Simulasi login untuk testing UI
+            const mockCode = 'clt_mock_auth_code_' + Math.random().toString(36).substring(2, 10);
+            window.location.href = `${window.location.pathname}?code=${mockCode}`;
+        }
+
         if (code) {
-            statusText.innerText = "Authorization successful! Copy the code below and paste it into your terminal:";
+            // Tampilan setelah Otorisasi Sukses (Callback / Profile View)
+            loginView.style.display = 'none';
+            profileView.style.display = 'block';
+            pageTitle.innerText = "Otorisasi Berhasil!";
+            pageSubtitle.innerText = "Salin kode otorisasi di bawah ini untuk menghubungkan akun Anda:";
             authCodeDiv.innerText = code;
-            codeContainer.style.display = 'block';
         } else if (error) {
-            statusText.innerHTML = `<span class="error">Error: ${error}</span><br>${errorDescription || ''}`;
-        } else {
-            statusText.innerText = "No authorization code found in the URL.";
+            // Tampilan jika terjadi Error
+            pageTitle.innerText = "Otorisasi Gagal";
+            pageSubtitle.innerHTML = `<span class="error-text">Error: ${error}</span><br>${errorDescription || 'Terjadi kesalahan saat menghubungkan ke TikTok.'}`;
         }
 
         function copyCode() {
             navigator.clipboard.writeText(authCodeDiv.innerText);
             alert("Code copied to clipboard!");
+        }
+
+        function shareContent() {
+            alert("Konten hiburan siap dibagikan ke akun @regenerationintime!");
         }
     </script>
 </body>
